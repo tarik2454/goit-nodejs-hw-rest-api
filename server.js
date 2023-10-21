@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 const app = require('./app');
-// fGzeRwSWmSTggUGk
-
-const DB_HOST =
-  'mongodb+srv://tarik2454:fGzeRwSWmSTggUGk@cluster0.qhdukbs.mongodb.net/goit-nodejs-hw-rest-api?retryWrites=true&w=majority';
 
 mongoose
-  .connect(DB_HOST)
+  .connect(process.env.DB_HOST, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    writeConcern: { w: 'majority' },
+  })
   .then(() => {
     app.listen(3000, () => {
       console.log(
