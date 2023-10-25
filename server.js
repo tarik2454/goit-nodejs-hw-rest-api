@@ -1,5 +1,20 @@
+const mongoose = require('mongoose');
 const app = require('./app');
 
-app.listen(3000, () => {
-  console.log('Server running. Use our API on port: 3000');
-});
+mongoose
+  .connect(process.env.DB_HOST, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    writeConcern: { w: 'majority' },
+  })
+  .then(() => {
+    app.listen(3000, () => {
+      console.log(
+        'Database connection successful. Server running. Use our API on port: 3000'
+      );
+    });
+  })
+  .catch(error => {
+    console.warn(error.message);
+    process.exit(1);
+  });
