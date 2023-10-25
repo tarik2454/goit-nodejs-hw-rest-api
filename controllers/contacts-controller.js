@@ -3,7 +3,7 @@ const { HttpError } = require('../helpers/HttpError');
 const { ctrlWrapper } = require('../decorators/index');
 
 const getAll = async (req, res) => {
-  const result = await Contact.find();
+  const result = await Contact.find({});
   res.json(result);
 };
 
@@ -12,7 +12,7 @@ const getById = async (req, res) => {
   const { contactId } = req.params;
   const result = await Contact.findById(contactId);
   if (!result) {
-    throw HttpError(404);
+    throw HttpError(404, `Contact with id=${contactId} not found`);
   }
   res.json(result);
 };
@@ -26,7 +26,7 @@ const updateById = async (req, res) => {
   const { contactId } = req.params;
   const result = await Contact.findByIdAndUpdate(contactId, req.body);
   if (!result) {
-    throw HttpError(404);
+    throw HttpError(404, `Contact with id=${contactId} not found`);
   }
   res.json(result);
 };
@@ -35,15 +35,11 @@ const updateStatusContact = async (req, res) => {
   const { contactId } = req.params;
   const { favorite } = req.body;
   if (!favorite) {
-    return res.status(400).json({ message: 'missing field favorite' });
+    return res.status(400, 'missing field favorite');
   }
-  const result = await Contact.findByIdAndUpdate(
-    contactId,
-    { favorite },
-    { new: true }
-  );
+  const result = await Contact.findByIdAndUpdate(contactId, req.body);
   if (!result) {
-    throw HttpError(404);
+    throw HttpError(404, `Contact with id=${contactId} not found`);
   }
   res.json(result);
 };
@@ -52,7 +48,7 @@ const deleleteById = async (req, res) => {
   const { contactId } = req.params;
   const result = await Contact.findByIdAndDelete(contactId);
   if (!result) {
-    throw HttpError(404);
+    throw HttpError(404, `Contact with id=${contactId} not found`);
   }
   res.json({ message: 'Delete success' });
   // статус 204 не отправляет тело

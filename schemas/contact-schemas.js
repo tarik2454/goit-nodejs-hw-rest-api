@@ -18,18 +18,23 @@ const contactAddSchema = Joi.object({
 
 const contactUpdateSchema = Joi.object({
   name: Joi.string().messages({
-    'any.required': '"name" must be exist"',
     'string.base': '"name" must be string"',
   }),
   email: Joi.string().messages({
-    'any.required': '"email" must be exist"',
     'string.base': '"email" must be string"',
   }),
   phone: Joi.string().messages({
-    'any.required': '"phone" must be exist"',
     'string.base': '"phone" must be string"',
   }),
   favorite: Joi.boolean(),
 });
 
-module.exports = { contactAddSchema, contactUpdateSchema };
+const contactUpdateFavoriteSchema = Joi.object({
+  favorite: Joi.boolean().required(),
+});
+
+module.exports = {
+  contactAddSchema,
+  contactUpdateSchema,
+  contactUpdateFavoriteSchema,
+};
