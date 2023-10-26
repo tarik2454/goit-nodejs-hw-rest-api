@@ -1,19 +1,21 @@
 const Joi = require('joi');
 
+const genderList = ['male', 'female'];
+const birthYearRegexp = /^\d{4}$/;
+
 const contactAddSchema = Joi.object({
   name: Joi.string().required().messages({
-    'any.required': '"name" must be exist"',
     'string.base': '"name" must be string"',
   }),
   email: Joi.string().required().messages({
-    'any.required': '"email" must be exist"',
     'string.base': '"email" must be string"',
   }),
   phone: Joi.string().required().messages({
-    'any.required': '"phone" must be exist"',
     'string.base': '"phone" must be string"',
   }),
   favorite: Joi.boolean(),
+  gender: Joi.string().valid(...genderList),
+  birthYear: Joi.string().pattern(birthYearRegexp),
 });
 
 const contactUpdateSchema = Joi.object({
@@ -27,6 +29,8 @@ const contactUpdateSchema = Joi.object({
     'string.base': '"phone" must be string"',
   }),
   favorite: Joi.boolean(),
+  gender: Joi.string().valid(...genderList),
+  birthYear: Joi.string().pattern(birthYearRegexp),
 });
 
 const contactUpdateFavoriteSchema = Joi.object({

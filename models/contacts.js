@@ -2,6 +2,9 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const { handleSaveError, preUpdate } = require('./hooks');
 
+const genderList = ['male', 'female'];
+const birthYearRegexp = /^\d{4}$/;
+
 const contactSchema = new Schema(
   {
     name: {
@@ -18,16 +21,16 @@ const contactSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    // gender: {
-    //   type: String,
-    //   enum: ['male', 'female'],
-    // },
-    // birthYear: {
-    //   type: String,
-    //   match: /^\d{4}$/,
-    // },
+    gender: {
+      type: String,
+      enum: genderList,
+    },
+    birthYear: {
+      type: String,
+      match: birthYearRegexp,
+    },
   },
-  { versionKey: false }
+  { versionKey: false, timestamps: true }
 );
 
 contactSchema.post('save', handleSaveError);
@@ -37,4 +40,6 @@ contactSchema.post('findOneAndUpdate', handleSaveError);
 
 const Contact = mongoose.model('Contact', contactSchema);
 
-module.exports = Contact;
+module.exports = {
+  Contact,
+};
