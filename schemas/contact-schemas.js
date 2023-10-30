@@ -5,13 +5,13 @@ const birthYearRegexp = /^\d{4}$/;
 
 const contactAddSchema = Joi.object({
   name: Joi.string().required().messages({
-    'string.base': '"name" must be string"',
+    'string.base': `"name" must be string"`,
   }),
   email: Joi.string().required().messages({
-    'string.base': '"email" must be string"',
+    'string.base': `"email" must be string"`,
   }),
   phone: Joi.string().required().messages({
-    'string.base': '"phone" must be string"',
+    'string.base': `"phone" must be string"`,
   }),
   favorite: Joi.boolean(),
   gender: Joi.string().valid(...genderList),
@@ -20,13 +20,13 @@ const contactAddSchema = Joi.object({
 
 const contactUpdateSchema = Joi.object({
   name: Joi.string().messages({
-    'string.base': '"name" must be string"',
+    'string.base': `"name" must be string"`,
   }),
   email: Joi.string().messages({
-    'string.base': '"email" must be string"',
+    'string.base': `"email" must be string"`,
   }),
   phone: Joi.string().messages({
-    'string.base': '"phone" must be string"',
+    'string.base': `"phone" must be string"`,
   }),
   favorite: Joi.boolean(),
   gender: Joi.string().valid(...genderList),
