@@ -29,12 +29,17 @@ const contactSchema = new Schema(
       type: String,
       match: birthYearRegexp,
     },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: 'user',
+      required: true,
+    },
   },
+
   { versionKey: false, timestamps: true }
 );
 
 contactSchema.post('save', handleSaveError);
-
 contactSchema.pre('findOneAndUpdate', preUpdate);
 contactSchema.post('findOneAndUpdate', handleSaveError);
 

@@ -8,7 +8,7 @@ mongoose
     writeConcern: { w: 'majority' },
   })
   .then(() => {
-    app.listen(3000, () => {
+    app.listen(process.env.PORT, () => {
       console.log(
         'Database connection successful. Server running. Use our API on port: 3000'
       );
