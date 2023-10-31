@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+
 const { Schema } = mongoose;
 const { handleSaveError, preUpdate } = require('./hooks');
 
@@ -34,6 +35,7 @@ const contactSchema = new Schema(
       ref: 'user',
       required: true,
     },
+    avatarURL: { type: String },
   },
 
   { versionKey: false, timestamps: true }

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+
 const { Schema } = mongoose;
 const { handleSaveError, preUpdate } = require('./hooks');
 
@@ -22,6 +23,7 @@ const userSchema = new Schema(
       enum: ['starter', 'pro', 'business'],
       default: 'starter',
     },
+    // avatarURL: { type: String },
     token: { type: String },
   },
   { versionKey: false, timestamps: true }
