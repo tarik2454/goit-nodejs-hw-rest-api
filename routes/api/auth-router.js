@@ -1,18 +1,18 @@
 const express = require('express');
+
+const authController = require('../../controllers/auth-controller');
 const { validateBody } = require('../../decorators/index');
 const {
   userSignupSchema,
   userSigninSchema,
 } = require('../../schemas/user-schemas');
+const { authenticate, upload } = require('../../middlewares/index');
 
 const authRouter = express.Router();
 
-const authController = require('../../controllers/auth-controller');
-
-const { authenticate } = require('../../middlewares/index');
-
 authRouter.post(
   '/register',
+  upload.single('avatar'),
   validateBody(userSignupSchema),
   authController.signup
 );

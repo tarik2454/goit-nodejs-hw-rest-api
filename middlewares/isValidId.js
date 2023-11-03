@@ -1,5 +1,5 @@
 const { isValidObjectId } = require('mongoose');
-const { HttpError } = require('../helpers/HttpError');
+const { HttpError } = require('../helpers/index');
 
 // Проверка того что id может быть id(меньше или больше символов, некорректность ввода). По умолчанию выбрасывает ошибку 500
 const isValidId = (req, res, next) => {

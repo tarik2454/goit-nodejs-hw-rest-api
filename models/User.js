@@ -23,7 +23,7 @@ const userSchema = new Schema(
       enum: ['starter', 'pro', 'business'],
       default: 'starter',
     },
-    // avatarURL: { type: String },
+    avatarURL: { type: String },
     token: { type: String },
   },
   { versionKey: false, timestamps: true }
@@ -33,7 +33,7 @@ userSchema.post('save', handleSaveError);
 userSchema.pre('findOneAndUpdate', preUpdate);
 userSchema.post('findOneAndUpdate', handleSaveError);
 
-const User = mongoose.model('user', userSchema);
+const User = mongoose.model('User', userSchema);
 
 module.exports = {
   User,

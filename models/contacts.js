@@ -30,12 +30,14 @@ const contactSchema = new Schema(
       type: String,
       match: birthYearRegexp,
     },
+    fotoURL: {
+      type: String,
+    },
     owner: {
       type: Schema.Types.ObjectId,
       ref: 'user',
       required: true,
     },
-    avatarURL: { type: String },
   },
 
   { versionKey: false, timestamps: true }

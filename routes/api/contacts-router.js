@@ -17,11 +17,11 @@ contactsRouter.get('/', contactsController.getAll);
 
 contactsRouter.get('/:contactId', isValidId, contactsController.getById);
 
-// upload.fields([{name: "avatar", maxCount:1}, {name: "poster", maxCount:3}]) - если ожидаем получить файлы из нескольких полей
-// upload.array("avatar", 8) - если нужно добавить больше чем один файл, 8 -количество добавляемых файлов
+// upload.fields([{name: "foto", maxCount:1}, {name: "poster", maxCount:3}]) - если ожидаем получить файлы из нескольких полей
+// upload.array("foto", 8) - если нужно добавить больше чем один файл, 8 -количество добавляемых файлов
 contactsRouter.post(
   '/',
-  upload.single('avatar'),
+  upload.single('foto'),
   validateBody(contactAddSchema),
   contactsController.addContact
 );
