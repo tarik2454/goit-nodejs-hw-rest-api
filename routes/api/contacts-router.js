@@ -1,15 +1,15 @@
 const express = require('express');
+
+const contactsController = require('../../controllers/contacts-controller');
 const { validateBody } = require('../../decorators/index');
 const {
   contactAddSchema,
   contactUpdateSchema,
   contactUpdateFavoriteSchema,
 } = require('../../schemas/contact-schemas');
-const { isValidId, authenticate } = require('../../middlewares/index');
+const { isValidId, authenticate, upload } = require('../../middlewares/index');
 
 const contactsRouter = express.Router();
-
-const contactsController = require('../../controllers/contacts-controller');
 
 contactsRouter.use(authenticate);
 
@@ -17,8 +17,11 @@ contactsRouter.get('/', contactsController.getAll);
 
 contactsRouter.get('/:contactId', isValidId, contactsController.getById);
 
+// upload.fields([{name: "foto", maxCount:1}, {name: "poster", maxCount:3}]) - если ожидаем получить файлы из нескольких полей
+// upload.array("foto", 8) - если нужно добавить больше чем один файл, 8 -количество добавляемых файлов
 contactsRouter.post(
   '/',
+  upload.single('foto'),
   validateBody(contactAddSchema),
   contactsController.addContact
 );

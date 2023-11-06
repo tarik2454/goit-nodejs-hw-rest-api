@@ -16,6 +16,7 @@ app.use(logger(formatsLogger));
 app.use(cors());
 // проверяет есть ли в запросе с фронтеда заголовок Content-Type, если есть то есть и body который передается на бекенд для дальнейшей обработки
 app.use(express.json());
+app.use(express.static('public'));
 
 app.use('/api/users', authRouter);
 app.use('/api/contacts', contactsRouter);

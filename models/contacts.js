@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
+
 const { Schema } = mongoose;
 const { handleSaveError, preUpdate } = require('./hooks');
 
 const genderList = ['male', 'female'];
 const birthYearRegexp = /^\d{4}$/;
+const phoneRegexp = /^[0-9]+$/;
 
 const contactSchema = new Schema(
   {
@@ -16,6 +18,7 @@ const contactSchema = new Schema(
     },
     phone: {
       type: String,
+      match: phoneRegexp,
     },
     favorite: {
       type: Boolean,
@@ -28,6 +31,9 @@ const contactSchema = new Schema(
     birthYear: {
       type: String,
       match: birthYearRegexp,
+    },
+    fotoURL: {
+      type: String,
     },
     owner: {
       type: Schema.Types.ObjectId,

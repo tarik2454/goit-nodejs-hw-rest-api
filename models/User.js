@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+
 const { Schema } = mongoose;
 const { handleSaveError, preUpdate } = require('./hooks');
 
@@ -6,6 +7,10 @@ const emailRegexp = /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/;
 
 const userSchema = new Schema(
   {
+    username: {
+      type: String,
+      required: [true, 'Username is required'],
+    },
     password: {
       type: String,
       minlength: 6,
@@ -22,6 +27,7 @@ const userSchema = new Schema(
       enum: ['starter', 'pro', 'business'],
       default: 'starter',
     },
+    avatarURL: { type: String },
     token: { type: String },
   },
   { versionKey: false, timestamps: true }
@@ -31,7 +37,7 @@ userSchema.post('save', handleSaveError);
 userSchema.pre('findOneAndUpdate', preUpdate);
 userSchema.post('findOneAndUpdate', handleSaveError);
 
-const User = mongoose.model('user', userSchema);
+const User = mongoose.model('User', userSchema);
 
 module.exports = {
   User,
