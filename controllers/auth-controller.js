@@ -49,6 +49,7 @@ const signup = async (req, res) => {
 
 const signin = async (req, res) => {
   const { email, password } = req.body;
+
   const user = await User.findOne({ email });
   if (!user) {
     throw HttpError(401, 'Email is invalid');
@@ -63,6 +64,7 @@ const signin = async (req, res) => {
   const token = jwt.sign(payload, JWT_SECRET, {
     expiresIn: '190h',
   });
+
   await User.findByIdAndUpdate(user._id, { token });
   res.json({
     token,
@@ -85,14 +87,16 @@ const updateAvatar = async (req, res) => {
   const { path: oldPath, filename } = req.file;
   const newPath = path.join(avatarPath, filename);
   await fs.rename(oldPath, newPath);
+
   await Jimp.read(newPath)
     .then(avatar => avatar.resize(250, 250).writeAsync(newPath))
     .catch(err => {
       throw HttpError(404, err.message);
     });
+
   const avatarURL = path.join('avatars', filename);
   await User.findByIdAndUpdate(_id, { avatarURL });
-  res.status(200).json({ avatarURL });
+  res.status(200).json({ avatarURL: avatarURL });
 };
 
 module.exports = {

@@ -3,6 +3,7 @@ const Joi = require('joi');
 const emailRegexp = /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/;
 
 const userSignupSchema = Joi.object({
+  username: Joi.string().required(),
   password: Joi.string().min(6).required().messages({
     'string.base': `"password" should be a type of 'text'`,
     'string.empty': `"password" cannot be an empty field`,

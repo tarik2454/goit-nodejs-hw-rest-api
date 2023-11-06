@@ -5,6 +5,7 @@ const { handleSaveError, preUpdate } = require('./hooks');
 
 const genderList = ['male', 'female'];
 const birthYearRegexp = /^\d{4}$/;
+const phoneRegexp = /^[0-9]+$/;
 
 const contactSchema = new Schema(
   {
@@ -17,6 +18,7 @@ const contactSchema = new Schema(
     },
     phone: {
       type: String,
+      match: phoneRegexp,
     },
     favorite: {
       type: Boolean,
