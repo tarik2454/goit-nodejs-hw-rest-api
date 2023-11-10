@@ -5,12 +5,11 @@ const fs = require('fs/promises');
 const gravatar = require('gravatar');
 const Jimp = require('jimp');
 const { nanoid } = require('nanoid');
+require('dotenv').config();
 
 const { User } = require('../models/User');
 const { HttpError, sendEmail } = require('../helpers/index');
 const { ctrlWrapper } = require('../decorators/index');
-
-require('dotenv').config();
 
 const { JWT_SECRET, BASE_URL } = process.env;
 
@@ -59,9 +58,29 @@ const signup = async (req, res) => {
   });
 };
 
+const verify = async (req, res) => {
+  const { verificationToken } = req.params;
+  const user = await User.findOne({ verificationToken });
+
+  if (!user) {
+    throw HttpError(404, 'Email not found');
+  }
+
+  const hashToken = await bcrypt.hash(verificationToken, 10);
+  await User.findByIdAndUpdate(user._id, {
+    verify: true,
+    verificationToken: hashToken,
+  });
+
+  res.json({
+    message: 'Email verify success',
+  });
+};
+
 const resendVerifyEmail = async (req, res) => {
   const { email } = req.body;
   const user = await User.findOne({ email });
+
   if (!user) {
     throw HttpError(404, 'Email not found');
   }
@@ -82,22 +101,6 @@ const resendVerifyEmail = async (req, res) => {
   });
 };
 
-const verify = async (req, res) => {
-  const { verificationToken } = req.params;
-  const user = await User.findOne({ verificationToken });
-  if (!user) {
-    throw HttpError(404, 'Email not found');
-  }
-  await User.findByIdAndUpdate(user._id, {
-    verify: true,
-    verificationToken: '',
-  });
-
-  res.json({
-    message: 'Email verify success',
-  });
-};
-
 const signin = async (req, res) => {
   const { email, password } = req.body;
 
@@ -105,6 +108,10 @@ const signin = async (req, res) => {
   if (!user) {
     throw HttpError(401, 'Email is invalid');
   }
+  if (!user.verify) {
+    throw HttpError(401, 'Email not verify');
+  }
+
   const passwordCompare = await bcrypt.compare(password, user.password);
   if (!passwordCompare) {
     throw HttpError(401, 'Password is invalid');
@@ -113,7 +120,7 @@ const signin = async (req, res) => {
     id: user._id,
   };
   const token = jwt.sign(payload, JWT_SECRET, {
-    expiresIn: '190h',
+    expiresIn: '23h',
   });
 
   await User.findByIdAndUpdate(user._id, { token });

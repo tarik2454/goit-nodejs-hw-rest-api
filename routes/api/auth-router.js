@@ -18,13 +18,13 @@ authRouter.post(
   authController.signup
 );
 
+authRouter.get('/verify/:verificationToken', authController.verify);
+
 authRouter.post(
   '/verify',
   validateBody(userEmailSchema),
   authController.resendVerifyEmail
 );
-
-authRouter.get('/verify/:verificationToken', authController.verify);
 
 authRouter.post(
   '/login',

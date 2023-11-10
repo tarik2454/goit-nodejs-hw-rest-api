@@ -1,7 +1,6 @@
 const nodemailer = require('nodemailer');
-const dotenv = require('dotenv');
 
-dotenv.config();
+require('dotenv').config();
 
 const { UKR_NET_EMAIL, UKR_NET_PASSWORD } = process.env;
 

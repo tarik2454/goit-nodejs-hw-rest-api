@@ -21,7 +21,7 @@ contactsRouter.get('/:contactId', isValidId, contactsController.getById);
 // upload.array("foto", 8) - если нужно добавить больше чем один файл, 8 -количество добавляемых файлов
 contactsRouter.post(
   '/',
-  upload.single('foto'),
+  upload.single('fotoUrl'),
   validateBody(contactAddSchema),
   contactsController.addContact
 );

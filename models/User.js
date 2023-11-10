@@ -11,16 +11,16 @@ const userSchema = new Schema(
       type: String,
       required: [true, 'Username is required'],
     },
-    password: {
-      type: String,
-      minlength: 6,
-      required: [true, 'Set password for user'],
-    },
     email: {
       type: String,
       match: emailRegexp,
       required: [true, 'Email is required'],
       unique: true,
+    },
+    password: {
+      type: String,
+      minlength: 6,
+      required: [true, 'Set password for user'],
     },
     subscription: {
       type: String,
