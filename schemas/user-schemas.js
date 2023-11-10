@@ -38,7 +38,17 @@ const userSigninSchema = Joi.object({
   }),
 });
 
+const userEmailSchema = Joi.object({
+  email: Joi.string().min(6).pattern(emailRegexp).required().messages({
+    'string.base': `"email" should be a type of 'text'`,
+    'string.empty': `"email" cannot be an empty field`,
+    'string.min': `"email" should have a minimum length of {#limit}`,
+    'any.required': `"email" is a required field`,
+  }),
+});
+
 module.exports = {
   userSignupSchema,
   userSigninSchema,
+  userEmailSchema,
 };

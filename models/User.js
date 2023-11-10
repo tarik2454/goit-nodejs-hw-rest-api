@@ -11,16 +11,16 @@ const userSchema = new Schema(
       type: String,
       required: [true, 'Username is required'],
     },
-    password: {
-      type: String,
-      minlength: 6,
-      required: [true, 'Set password for user'],
-    },
     email: {
       type: String,
       match: emailRegexp,
       required: [true, 'Email is required'],
       unique: true,
+    },
+    password: {
+      type: String,
+      minlength: 6,
+      required: [true, 'Set password for user'],
     },
     subscription: {
       type: String,
@@ -29,6 +29,14 @@ const userSchema = new Schema(
     },
     avatarURL: { type: String },
     token: { type: String },
+    verify: {
+      type: Boolean,
+      default: false,
+    },
+    verificationToken: {
+      type: String,
+      required: [true, 'Verify token is required'],
+    },
   },
   { versionKey: false, timestamps: true }
 );
