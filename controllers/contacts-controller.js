@@ -1,7 +1,7 @@
 const fs = require('fs/promises');
 const gravatar = require('gravatar');
 
-const { Contact } = require('../models/Contacts');
+const { Contact } = require('../models/contacts');
 const { HttpError, cloudinary } = require('../helpers/index');
 const { ctrlWrapper } = require('../decorators/index');
 
